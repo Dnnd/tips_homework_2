@@ -5,7 +5,7 @@ import matplotlib.pylab as plt
 import scipy.stats as st
 from statsmodels.distributions.empirical_distribution import ECDF
 from  scipy.stats import ks_2samp
-from scipy.stats import kstwobign
+from scipy.stats import ksone
  
 def theor_cdf(x, rel_scale):
     return [(1 - np.exp(-f*rel_scale)) for f in x]
@@ -15,7 +15,7 @@ def theor_pdf(x, rel_scale):
 
 def read_unix_csv(filename):
     data = []
-    with open('9_data1.csv', newline='') as csvfile:
+    with open(filename, newline='') as csvfile:
         reader = csv.reader(csvfile, 'unix')
         for row in reader:
             for number in row:
@@ -93,7 +93,7 @@ data2 = np.array(read_unix_csv('9_data2.csv'))
 
 dmin, dmax = d_stat(data1, data2)    
 dstat_emp = np.max([dmin, dmax])
-ks_crit = kstwobign.ppf(0.99)
+ks_crit = ksone.ppf(0.6)
 
 n, m = np.size(data1), np.size(data2)
 print('Dm,n : {}, Kcrit: {}'.format(dstat_emp, ks_crit))
